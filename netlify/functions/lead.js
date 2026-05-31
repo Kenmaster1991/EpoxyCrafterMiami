@@ -27,7 +27,7 @@ exports.handler = async (event) => {
       properties: {
         'Nombre':    { title: [{ text: { content: nombre } }] },
         'Email':     { email },
-        'Teléfono':  { phone_number: telefono || '' },
+        'Teléfono':  { phone_number: telefono || null },
         'Servicio':  { select: servicio ? { name: servicio } : null },
         'Mensaje':   { rich_text: [{ text: { content: mensaje || '' } }] },
         'Estado':    { select: { name: 'New Lead' } },

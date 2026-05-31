@@ -36,7 +36,7 @@ app.post('/api/lead', async (req, res) => {
           email: email
         },
         'Teléfono': {
-          phone_number: telefono || ''
+          phone_number: telefono || null
         },
         'Servicio': {
           select: servicio ? { name: servicio } : null
