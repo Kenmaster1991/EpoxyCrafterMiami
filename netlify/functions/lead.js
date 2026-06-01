@@ -3,20 +3,32 @@ const { Client } = require('@notionhq/client');
 const notion = new Client({ auth: process.env.NOTION_TOKEN });
 const DATABASE_ID = process.env.NOTION_DATABASE_ID || '8c857ad94d014c50a814039ad17fc572';
 
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Content-Type': 'application/json'
+};
+
 exports.handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers: CORS_HEADERS, body: '' };
+  }
+
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
+    return { statusCode: 405, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Method Not Allowed' }) };
   }
 
   let body;
   try { body = JSON.parse(event.body); }
-  catch { return { statusCode: 400, body: JSON.stringify({ error: 'Invalid JSON' }) }; }
+  catch { return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid JSON' }) }; }
 
   const { nombre, email, telefono, servicio, mensaje } = body;
 
   if (!nombre || !email) {
     return {
       statusCode: 400,
+      headers: CORS_HEADERS,
       body: JSON.stringify({ error: 'Nombre y email son requeridos.' })
     };
   }
@@ -37,7 +49,7 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: CORS_HEADERS,
       body: JSON.stringify({ success: true, id: page.id })
     };
 
@@ -45,6 +57,7 @@ exports.handler = async (event) => {
     console.error('Notion error:', err.message);
     return {
       statusCode: 500,
+      headers: CORS_HEADERS,
       body: JSON.stringify({ error: 'No se pudo guardar el lead.' })
     };
   }
