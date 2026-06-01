@@ -760,7 +760,9 @@ document.getElementById('lead-form').addEventListener('submit', async function(e
   btn.textContent = 'Sending...';
 
   try {
-    const api = (window.location.hostname === 'localhost' || window.location.hostname === '') ? 'http://localhost:3001/api/lead' : '/.netlify/functions/lead';
+    const api = (window.location.hostname === 'localhost' || window.location.hostname === '')
+      ? 'http://localhost:3001/api/lead'
+      : 'https://epoxy-crafter-miami.netlify.app/.netlify/functions/lead';
     const res = await fetch(api, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
