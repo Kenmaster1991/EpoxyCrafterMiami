@@ -52,7 +52,7 @@ exports.handler = async (event) => {
     await resend.emails.send({
       from: 'EpoxyCrafter Miami <leads@epoxycraftermiami.com>',
       reply_to: email,
-      to: 'kcristia@epoxycraftermiami.com',
+      to: ['kcristia@epoxycraftermiami.com', 'kennycristiarodriguez@gmail.com'],
       subject: `🆕 Nuevo Lead: ${nombre} — ${servicio || 'Sin servicio'}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f9f9f9; padding: 30px; border-radius: 8px;">
