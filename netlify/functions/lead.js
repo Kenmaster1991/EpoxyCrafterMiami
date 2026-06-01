@@ -50,7 +50,8 @@ exports.handler = async (event) => {
     });
 
     await resend.emails.send({
-      from: 'EpoxyCrafter Miami <leads@epoxycraftermiami.com>',
+      from: 'EpoxyCrafter Miami <onboarding@resend.dev>',
+      reply_to: 'kcristia@epoxycraftermiami.com',
       to: 'kcristia@epoxycraftermiami.com',
       subject: `🆕 Nuevo Lead: ${nombre} — ${servicio || 'Sin servicio'}`,
       html: `
